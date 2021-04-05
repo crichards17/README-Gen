@@ -1,6 +1,7 @@
 // TODO: Include packages needed for this application
-var inquirer = require('inquirer');
-var fs = require('fs');
+const inquirer = require('inquirer');
+const fs = require('fs');
+const generateMarkdown = require('./utils/generateMarkdown');
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -48,13 +49,17 @@ const questions = [
         type: 'list',
         message: 'What type of license does this project implement? ',
         name: 'license',
-        choices: ['Apache License 2.0', 'MIT License', 'GNU GPL v3'],
+        choices: ['Apache License 2.0', 'MIT License', 'GNU GPL v3', 'None'],
     },
 ];
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
-    console.log(data);
+    fs.writeFile(`./output/${fileName}`, 
+    generateMarkdown(data), 
+    (err) =>
+    err ? console.error(err) : console.log('README generated')
+);
 }
 
 // TODO: Create a function to initialize app
